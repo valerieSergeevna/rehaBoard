@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jstl/core">
+<h:head>
+</h:head>
+<!--background-color: lightcyan;-->
+<h:body style="
+    background: url('#{resource['img/IMG_5896.JPG']}');repeat-y;
+    background-size: 100%;">
+    <div style="margin-left: 20px">
+        <h1 style="color: #5a7ce2">Events</h1>
+    </div>
+<!--    <div class="container">-->
+        <p:dataTable value="#{eventBean.events}" var="event" id="eventsTable">
+            <tbody>
+            <p:column styleClass="centeredColumnContent">
+                <f:facet style="color:white;" name="header">Patient name</f:facet>
+                #{event.patientName}
+            </p:column>
+            <p:column styleClass="centeredColumnContent">
+                <f:facet style="color:white;" name="header">Patient surname</f:facet>
+                #{event.patientSurname}
+            </p:column>
+            <p:column styleClass="centeredColumnContent">
+                <f:facet  name="header">Name</f:facet>
+                #{event.name}
+            </p:column>
+            <p:column class="text-info" styleClass="centeredColumnContent">
+                <f:facet  style="color:white;" name="header">Dose</f:facet>
+                #{event.dose}
+            </p:column>
+            <p:column styleClass="centeredColumnContent">
+                <f:facet style="color:white;"  name="header">Type</f:facet>
+                #{event.type}
+            </p:column>
+            <p:column styleClass="centeredColumnContent">
+                <f:facet style="color:white;" name="header">Status</f:facet>
+                #{event.status}
+            </p:column>
+            <p:column styleClass="centeredColumnContent">
+                <f:facet style="color:white;" name="header">Cancel reason</f:facet>
+                #{event.cancelReason}
+            </p:column>
+            </tbody>
+            <tfoot>
+            <f:facet name="footer">
+                <c:if test="#{empty eventBean.events}">
+                    <h3>Server disabled. Please, wait.</h3>
+                </c:if>
+            </f:facet>
+            </tfoot>
+        </p:dataTable>
+<!--    </div>-->
+</h:body>
+<h:form>
+    <f:websocket channel="updateEvents">
+        <f:ajax event="UPDATE" render="eventsTable"/>
+    </f:websocket>
+</h:form>
+</html>
