@@ -7,13 +7,13 @@ package com.webapp;
 import org.primefaces.shaded.json.JSONObject;
 
 
-
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class JmsMessageTreatmentEvent {
+public class JmsMessageTreatmentEvent implements Serializable {
     private TreatmentType type;
     //  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    // private LocalDateTime treatmentTime;
+    private String treatmentTime;
     private String patientName;
     private String patientSurname;
     private double dose;
@@ -26,12 +26,13 @@ public class JmsMessageTreatmentEvent {
     }
 
     public JmsMessageTreatmentEvent(String patientName, String patientSurname, TreatmentType type,
-                                    double dose, String status, String cancelReason, String name) {
+                                    double dose, String status, String cancelReason, String name, String treatmentTime) {
         this.patientName = patientName;
         this.patientSurname = patientSurname;
         this.type = type;
-        //    this.treatmentTime = treatmentTime;
+        this.treatmentTime = treatmentTime;
         this.dose = dose;
+
         this.status = status;
         this.cancelReason = cancelReason;
         this.name = name;
@@ -99,6 +100,14 @@ public class JmsMessageTreatmentEvent {
 
     public void setPatientSurname(String patientSurname) {
         this.patientSurname = patientSurname;
+    }
+
+    public String getTreatmentTime() {
+        return treatmentTime;
+    }
+
+    public void setTreatmentTime(String treatmentTime) {
+        this.treatmentTime = treatmentTime;
     }
 
     @Override
